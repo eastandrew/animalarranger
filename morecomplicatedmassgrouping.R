@@ -64,6 +64,19 @@ boxplot(mass~treat, data=df)
 dotchart(df$mass, labels=df$treat)  # see how the treatment order is random, but it is in order (what does this mean?)
 summary(aov(mass~factor(treat), data=df))
 
+                             
+                             
+plot(density(df$mass[df$treat=="cont"],bw=0.4),ylim=c(-0.1,0.4))
+points(density(df$mass[df$treat=="low"],bw=0.4),type="l", col="darkgreen")
+points(density(df$mass[df$treat=="med"],bw=0.4),type="l", col="blue")
+points(density(df$mass[df$treat=="high"],bw=0.4),type="l", col="orange")
+points(density(df$mass[df$treat=="high"],bw=0.4),type="l", col="red")
+rug(df$mass[df$treat=="cont"],line=-5)
+rug(df$mass[df$treat=="low"], col="darkgreen",line=-4)
+rug(df$mass[df$treat=="med"], col="blue",line=-3)
+rug(df$mass[df$treat=="high"], col="orange",line=-2)
+rug(df$mass[df$treat=="highhigh"], col="red",line=-1)
+                             
 ####
 
 
