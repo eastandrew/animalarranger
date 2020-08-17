@@ -13,19 +13,24 @@ library(shiny)
 ui <- fluidPage(
     
     # App title ----
-    titlePanel("Animal Arranger, by mass into treatments"),
+    titlePanel("animalarranger: Arrange Animals Evenly in Treatments by Mass"),
     
     # Sidebar layout with input and output definitions ----
     sidebarLayout(
         
         # Sidebar panel for inputs ----
         sidebarPanel(
-            
-            
-            textInput("mass", label = h3("Mass"), value = "5.25, 5.05, 8.55, 5.65, 7.5, 6.55, 7, 6, 6.25, 5.5, 6.75, 7.9, 7.15, 6.05, 5.55, 5.9, 6.45, 4.9, 5.15,5.35, 5.95, 6.9, 7.25, 8.1, 5.35, 6.45, 6.15, 4.95, 5.6, 5.2,5.55, 6.6, 7, 7.75, 5.8, 6.35, 5.35, 4.8, 6.05, 5.1, 5.65, 8.2,6.5, 5.95, 6.25, 7.3, 5.45, 7, 5.25, 5"),
-            textInput("ID", label=h3("Animal ID"), value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50"),
-            textInput("numtreats", label=h3("Number of Treatments"), value="5"),
-            actionButton("rearrange","Shuffle")
+            h2("Enter Data, Hit Shuffle"),
+            p("Make sure each animal has a mass and ID."),
+            textInput("mass", label = h4("Mass"), value = "5.25, 5.05, 8.55, 5.65, 7.5, 6.55, 7, 6, 6.25, 5.5, 6.75, 7.9, 7.15, 6.05, 5.55, 5.9, 6.45, 4.9, 5.15,5.35, 5.95, 6.9, 7.25, 8.1, 5.35, 6.45, 6.15, 4.95, 5.6, 5.2,5.55, 6.6, 7, 7.75, 5.8, 6.35, 5.35, 4.8, 6.05, 5.1, 5.65, 8.2,6.5, 5.95, 6.25, 7.3, 5.45, 7, 5.25, 5"),
+            textInput("ID", label=h4("Animal ID"), value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50"),
+            textInput("numtreats", label=h4("Number of Treatments"), value="5"),
+            actionButton("rearrange",label=h3("Shuffle")),
+            br(),
+            br(),
+            br(),
+            p("Written by A. East"),
+            p(a("GitHub",href="https://github.com/eastandrew/massgrouping"))
             
         ),
         
