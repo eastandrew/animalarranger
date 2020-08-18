@@ -30,7 +30,7 @@ ui <- fluidPage(
             br(),
             br(),
             p("Written by A. East"),
-            p(a("GitHub",href="https://github.com/eastandrew/massgrouping"))
+            p(a("GitHub",href="https://github.com/eastandrew/animalarranger"))
             
         ),
         
