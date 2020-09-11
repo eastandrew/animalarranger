@@ -8,7 +8,7 @@
 #
 
 library(shiny)
-library(sjstats)
+
 
 # Define UI for random distribution app ----
 ui <- fluidPage(
@@ -66,6 +66,9 @@ server <- function(input, output) {
         liz2
         
     })
+    
+    library(pwr)
+    library(sjstats)
     
     # Generate a plot of the data ----
     # Also uses the inputs to build the plot label. Note that the
