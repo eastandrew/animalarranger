@@ -8,6 +8,7 @@
 #
 
 library(shiny)
+library(sjstats)
 
 # Define UI for random distribution app ----
 ui <- fluidPage(
@@ -40,7 +41,8 @@ ui <- fluidPage(
             # Output: Tabset w/ plot, summary, and table ----
             tabsetPanel(type = "tabs",
                         tabPanel("Table", tableOutput("table")),
-                        tabPanel("Plot", plotOutput("plot"))
+                        tabPanel("Plot", plotOutput("plot")),
+                        tabPanel("ANOVA", tableOutput("anova"))
             )
             
         )
@@ -62,7 +64,7 @@ server <- function(input, output) {
         liz2 <- liz[order(liz$Mass),]
         liz2$Treatment <- sample(c(letters[1:Treatment]),prob=c(rep((1/Treatment),Treatment)))
         liz2
-
+        
     })
     
     # Generate a plot of the data ----
@@ -78,39 +80,44 @@ server <- function(input, output) {
     
     
     output$plot <- renderPlot({
-        with(d(), dotchart(d()[,1], labels=d()[,3], groups=factor(d()[,3])))#
+        with(d(), dotchart(d()[,1], labels=d()[,2], groups=factor(d()[,3]), pch=16, xlab="Mass", ylab="Treatment and ID"))#
+    }, height=800, width=800, units="px")
+    
+    
+    output$anova <- renderTable({
+        with(d(), anova_stats(aov(d()[,1]~factor(d()[,"Treatment"]))))
     })
     
     # Generate a summary of the data ----
     #output$summary <- renderPrint({
-   #     summary(d())
-   # })
+    #     summary(d())
+    # })
     
     # Generate an HTML table view of the data ----
-  # output$lc50 <- renderTable({
-  #     #ED(d(), c(0.01,0.05,0.5,0.95,0.99), type="absolute", interval="delta")
-  #     
-  #     resplist <- c(0.01,0.1,0.25,0.5,0.75,0.9,0.99)
-  #     EDlist <- c(ED(d(),resplist, type="absolute", display=F)[,1])
-  #     EDlistlower <- c(ED(d(),resplist, type="absolute", interval="delta", display=F)[,3])
-  #     EDlistupper <- c(ED(d(),resplist, type="absolute", interval="delta", display=F)[,4])
-  #     dfpred <- data.frame(LC_value=resplist, Estimated_Dose=EDlist, ED_lower=EDlistlower, ED_upper=EDlistupper)
-  # })
+    # output$lc50 <- renderTable({
+    #     #ED(d(), c(0.01,0.05,0.5,0.95,0.99), type="absolute", interval="delta")
+    #     
+    #     resplist <- c(0.01,0.1,0.25,0.5,0.75,0.9,0.99)
+    #     EDlist <- c(ED(d(),resplist, type="absolute", display=F)[,1])
+    #     EDlistlower <- c(ED(d(),resplist, type="absolute", interval="delta", display=F)[,3])
+    #     EDlistupper <- c(ED(d(),resplist, type="absolute", interval="delta", display=F)[,4])
+    #     dfpred <- data.frame(LC_value=resplist, Estimated_Dose=EDlist, ED_lower=EDlistlower, ED_upper=EDlistupper)
+    # })
     
-  #  output$predictions <- renderTable({
-  #      
-  #      EDlist <- c(ED(d(),c(0.1,0.9), type="absolute", display=F)[,1])
-  #      vect <- c()
-  #      numbertreat <- as.numeric(unlist(strsplit(input$numtreats,",")))
-  #      vect[1] <- min(EDlist)
-  #      multiplier <- (exp((log(max(EDlist))-log(min(EDlist)))/(numbertreat-1)))
-  #      for (i in 2:(numbertreat)){
-  #          vect[i] <- vect[i-1]*multiplier
-  #      }
-  #      
-  #      
-  #      dfpred <- data.frame(New_Doses=vect, Estimated_Mortality=predict(d(),newdata=data.frame(vect)))
-  #  })
+    #  output$predictions <- renderTable({
+    #      
+    #      EDlist <- c(ED(d(),c(0.1,0.9), type="absolute", display=F)[,1])
+    #      vect <- c()
+    #      numbertreat <- as.numeric(unlist(strsplit(input$numtreats,",")))
+    #      vect[1] <- min(EDlist)
+    #      multiplier <- (exp((log(max(EDlist))-log(min(EDlist)))/(numbertreat-1)))
+    #      for (i in 2:(numbertreat)){
+    #          vect[i] <- vect[i-1]*multiplier
+    #      }
+    #      
+    #      
+    #      dfpred <- data.frame(New_Doses=vect, Estimated_Mortality=predict(d(),newdata=data.frame(vect)))
+    #  })
     
 }
 
